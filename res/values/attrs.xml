@@ -1,0 +1,13 @@
+<resources>
+   <declare-styleable name="SetTimeRowView">
+       <attr name="label_text" format="string"></attr>
+       <attr name="timer" format="boolean"></attr>
+   </declare-styleable>
+   
+   <declare-styleable name="CircleProgressView">
+       <attr name="slice_color" format="color"></attr>
+       
+   </declare-styleable>
+</resources>
+
+<!-- declare-styleable element specifies the View name. -->

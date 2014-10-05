@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="marigold">#FEDA00</color>    
+	<color name="marigold_60">#60FEDA00</color>    
+	<color name="dark_teal_80">#800A3D4C</color>
+	<color name="light_teal_80">#8006C6FE</color>
+	<color name="light_teal_60">#6006C6FE</color>
+	<color name="light_gray">#E6E6E6</color>
+	
+	<color name="tomato_red_80">#80FF4533</color>
+	
+	<color name="white_80">#80ffffff</color>
+	<color name="black_75">#75000000</color>
+</resources>

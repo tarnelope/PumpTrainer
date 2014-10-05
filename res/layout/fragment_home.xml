@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin"
+    tools:context="com.ttarn.PumpTrainer.HomeFragment" 
+    >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:src="@drawable/logo2" />
+
+
+    <com.ttarn.pumptrainer.customviews.SetTimeRowView
+        android:layout_marginTop="@dimen/start_button_margin"
+        android:id="@+id/hang_time_row"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        custom:label_text="@string/hang"
+        custom:timer="true" />
+
+    <com.ttarn.pumptrainer.customviews.SetTimeRowView
+        android:id="@+id/rest_time_row"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hang_time_row"
+        android:layout_centerHorizontal="true"
+        custom:label_text="@string/rest"
+        custom:timer="true" />
+
+    <com.ttarn.pumptrainer.customviews.SetTimeRowView
+        android:id="@+id/rep_time_row"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rest_time_row"
+        android:layout_centerHorizontal="true"
+        custom:label_text="@string/rep"
+        custom:timer="false" />
+    
+    <com.ttarn.pumptrainer.customviews.SetTimeRowView
+        android:id="@+id/recovery_time_row"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rep_time_row"
+        android:layout_centerHorizontal="true"
+        custom:label_text="@string/recovery"
+        custom:timer="true" />
+
+    <Button
+        android:id="@+id/start_btn"
+        android:layout_width="@dimen/start_button_dimen"
+        android:background="@drawable/start_button_default"
+        android:layout_height="@dimen/start_button_dimen"
+        android:layout_below="@+id/recovery_time_row"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="@color/white_80"
+        android:text="@string/start" 
+        android:layout_marginTop="@dimen/start_button_margin"/>
+
+</RelativeLayout>
+<!--
+ <ImageView 
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/icon_image"/>
+-->

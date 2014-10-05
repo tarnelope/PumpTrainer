@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PumpTrainer</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="hang">Hang</string>
+    <string name="rest">Rest</string>
+    <string name="rep">Rep</string>
+    <string name="recovery">Recovery</string>
+    
+    <string name="start">Start</string>
+    <string name="pause">Pause</string>
+
+    <string name="time_colon"> : </string>
+</resources>
