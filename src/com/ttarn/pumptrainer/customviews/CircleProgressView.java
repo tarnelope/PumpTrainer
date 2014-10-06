@@ -12,7 +12,7 @@ public class CircleProgressView extends View
 {
     private CircleAttribute mCircleAttribute;
     private int mMaxProgress = 100;
-    private int mSubCurProgress;
+    private float mSubCurProgress;
 
     public static final int ARC=0;
     public static final int SECTOR=1;
@@ -45,7 +45,11 @@ public class CircleProgressView extends View
         this.mMaxProgress = 100;
         this.mSubCurProgress = 0;
     }
-
+    
+    public float getCurrentSubCurProgress() {
+    	return mSubCurProgress;
+    }
+    
     public void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
@@ -89,7 +93,7 @@ public class CircleProgressView extends View
      * 设置进度
      * @param progress   取值范围0-100
      */
-    public void setmSubCurProgress(int progress){
+    public void setmSubCurProgress(float progress){
         this.mSubCurProgress=progress;
         invalidate();
     }

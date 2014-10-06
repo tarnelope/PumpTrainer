@@ -87,22 +87,21 @@ containing a value of this type.
         public static final int time_wheel=0x7f020007;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0011;
+        public static final int action_settings=0x7f0a0010;
         public static final int action_text=0x7f0a0001;
-        public static final int button1=0x7f0a0006;
         public static final int container=0x7f0a0000;
-        public static final int hang_time_row=0x7f0a0008;
-        public static final int imageView1=0x7f0a0007;
-        public static final int minute_text=0x7f0a000e;
-        public static final int recovery_time_row=0x7f0a000b;
+        public static final int hang_time_row=0x7f0a0007;
+        public static final int imageView1=0x7f0a0006;
+        public static final int minute_text=0x7f0a000d;
+        public static final int recovery_time_row=0x7f0a000a;
         public static final int rep_text=0x7f0a0005;
-        public static final int rep_time_row=0x7f0a000a;
-        public static final int rest_time_row=0x7f0a0009;
+        public static final int rep_time_row=0x7f0a0009;
+        public static final int rest_time_row=0x7f0a0008;
         public static final int rest_wheel=0x7f0a0003;
-        public static final int second_text=0x7f0a0010;
-        public static final int set_time_row_label=0x7f0a000d;
-        public static final int start_btn=0x7f0a000c;
-        public static final int time_colon=0x7f0a000f;
+        public static final int second_text=0x7f0a000f;
+        public static final int set_time_row_label=0x7f0a000c;
+        public static final int start_btn=0x7f0a000b;
+        public static final int time_colon=0x7f0a000e;
         public static final int time_text=0x7f0a0004;
         public static final int time_wheel=0x7f0a0002;
     }

@@ -71,15 +71,6 @@
         android:layout_marginTop="@dimen/rep_text_top_margin"
         />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
-        android:text="@string/pause" />
-
 </RelativeLayout>
 
 <!-- 

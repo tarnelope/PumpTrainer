@@ -131,10 +131,8 @@ public class MainActivity extends Activity implements TimeSetListener, ExerciseC
 		
 		mExerciseFrag = new ExerciseFragment();
 		mExerciseFrag.setWorkoutTimes(mHangTime, mRestTime, mRepNum, mRecoveryTime);
-		mExerciseFrag.setTimesArray(mCurrentWorkoutArray);
 		mFrags[EXERCISE_INDEX] = mExerciseFrag;
 		
-		//getFragmentManager().beginTransaction().hide(mHomeFrag).show(mExerciseFrag).commit();
 		showFragment(mExerciseFrag, false);
 	}
 	

@@ -32,8 +32,9 @@ public class ExerciseFragment extends Fragment {
 	private CircleProgressView mTimeWheel;
 	
 	private boolean isPaused;
+	private boolean isResuming;
 	
-	private ArrayList<Integer> mTimesArray;
+	private static int mStartCountDownTime = 3;
 	private int mHangTime;
 	private int mRestTime;
 	private int mRepNum;
@@ -60,13 +61,14 @@ public class ExerciseFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mTimesArray = new ArrayList<Integer>();
 		
 		mRotateAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
 		mRotateAnim.setDuration(mHangTime*mSecondInterval);
 		mRotateAnim.setInterpolator(new LinearInterpolator());
 		
 		isPaused = false;
+		isResuming = false;
+		
 		mTimeFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Chunkfive.otf");
 	};
 	
@@ -77,8 +79,22 @@ public class ExerciseFragment extends Fragment {
     	
     	mRestWheel = (CircleProgressView) v.findViewById(R.id.rest_wheel);
     	mRestWheel.setVisibility(View.GONE);
+    	mRestWheel.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				pauseCountDown();
+			}
+		});
     	
     	mTimeWheel = (CircleProgressView) v.findViewById(R.id.time_wheel);
+    	mTimeWheel.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				pauseCountDown();
+			}
+		});
     	
     	mActionText = (TextView) v.findViewById(R.id.action_text);
     	mActionText.setTypeface(mTimeFont);
@@ -91,22 +107,19 @@ public class ExerciseFragment extends Fragment {
     	mRepText = (TextView) v.findViewById(R.id.rep_text);
     	mRepText.setText(mRepNum + mRepRemaining);
     	
-    	Button pauseBtn = (Button) v.findViewById(R.id.button1);
-    	pauseBtn.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Log.d("ExerciseFrag", "PAUSED");
-				isPaused = !isPaused;
-				if (isPaused) {
-					restartTimer();
-				} else {
-					
-				}
-			}
-		});
-    	
     	return v;
+	}
+	
+	private void pauseCountDown() {
+		Log.d("ExerciseFrag", "PAUSED");
+		isPaused = !isPaused;
+		if (!isPaused) {
+			mActionText.setBackgroundColor(getActivity().getResources().getColor(R.color.black_75));
+			resumeTimer();
+		} else {
+			mActionText.setText("PAUSED");
+			mActionText.setBackgroundColor(getActivity().getResources().getColor(R.color.tomato_red_80));
+		}
 	}
 	
 	@Override
@@ -119,20 +132,22 @@ public class ExerciseFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		mRepText.setText(Integer.toString(mRepNum));
-		startCountDown();
+		startCountDown(mStartCountDownTime);
+		//runCountDown(mHangTime, HANG_INDEX);
 	}
 	
-	public void restartTimer() {
-		int remainingTime = Integer.parseInt(mTimeText.getText().toString())*Math.round(mSecondInterval);
+	public void resumeTimer() {
+		isResuming = true;
+		int remainingTime = Integer.parseInt(mTimeText.getText().toString());
 		switch (mCurrentIndex) {
 			case 0:
-				updateCountDown(remainingTime, START_INDEX);
+				startCountDown(remainingTime);
 				break;
 			case 1:
-				updateCountDown(remainingTime, HANG_INDEX);
+				hangCountDown(remainingTime);
 				break;
 			case 2:
-				updateCountDown(remainingTime, REST_INDEX);
+				restCountDown(remainingTime);
 				break;
 		}
 	}
@@ -144,23 +159,15 @@ public class ExerciseFragment extends Fragment {
 		mRecoveryTime = recovery;
 	}
 	
-	public void setTimesArray(ArrayList<Integer> array) {
-		mTimesArray = new ArrayList<Integer>(array.size());
-		for (int i:array) {
-			mTimesArray.add(i);
-			Log.d("setTimesArray", "current value is " + String.valueOf(i));
-		}
-	}
-	
-	
-	private void startCountDown() {
+	private void startCountDown(final int time) {
 		
 		mCurrentIndex = START_INDEX;
 		
 		mActionText.setText("Workout begins in...");
 		mActionText.setTextSize(30);
+		
 		Runnable r = new Runnable() {
-	        private int cdTime = 3000;
+	        private int cdTime = time*Math.round(mSecondInterval);
 	        public void run() {
 	            while (cdTime >= 0 && !isPaused) {  
 	                handler.post(new Runnable(){
@@ -186,20 +193,20 @@ public class ExerciseFragment extends Fragment {
 		if (time > 0) {
     		mTimeText.setText("" + ((time) / 1000));
     	} else if (actionIndex == START_INDEX ){
-    		hangCountDown();
+    		hangCountDown(mHangTime);
     	} else if (actionIndex == HANG_INDEX ) {
-    		restCountDown();
+    		restCountDown(mRestTime);
     	} else if (actionIndex == REST_INDEX && mRepNum > 0) {
     		mRepNum--;
     		mRepText.setText(String.valueOf(mRepNum) + mRepRemaining);
     		mRestWheel.setVisibility(View.GONE);
-    		hangCountDown();
+    		hangCountDown(mHangTime);
     	} else {
     		mListener.launchExerciseComplete();
     	}
 	}
 	
-	private void hangCountDown() {
+	private void hangCountDown(final int hangTime) {
 		
 		mCurrentIndex = HANG_INDEX;
 		
@@ -209,15 +216,18 @@ public class ExerciseFragment extends Fragment {
 		mTimeWheel.setType(CircleProgressView.ARC);
 		
 	    Runnable runnable = new Runnable() {
-			private int hangTimeLeft = Math.round(mHangTime * mSecondInterval);
-			int slice = 100/mHangTime;
-			int currentSlice = slice;
+			private int hangTimeLeft = Math.round(hangTime * mSecondInterval);
+			double slice = 100.00/mHangTime;
+			double currentSlice = slice;
 	        public void run() {
 	            while (hangTimeLeft >= 0 && !isPaused) {  
 	            	handler.post(new Runnable(){
 	            		public void run() {
-	            			Log.d("perc is ", String.valueOf(currentSlice));
-	            			mTimeWheel.setmSubCurProgress(currentSlice);	
+	            			if (isResuming) {
+	            				currentSlice = mTimeWheel.getCurrentSubCurProgress();
+	            				isResuming = false;
+	            			}
+	            			mTimeWheel.setmSubCurProgress((float)currentSlice);	
 	            			updateCountDown(hangTimeLeft, HANG_INDEX);
 		                    hangTimeLeft -= 1000;
 		                    currentSlice += slice;
@@ -233,22 +243,26 @@ public class ExerciseFragment extends Fragment {
 	            }
 	        }
 	    };
-	   // mTimeWheel.startAnimation(mRotateAnim);
+
 	    new Thread(runnable).start();
 	}
 	
-private void restCountDown() {
+	private void restCountDown(final int restTime) {
 	
 		mCurrentIndex = REST_INDEX;
 		mRestWheel.setVisibility(View.VISIBLE);
 		mActionText.setText("REST");
 		
 	    Runnable runnable = new Runnable() {
-			private int timeLeft = Math.round(mRestTime * mSecondInterval);
+			private int timeLeft = Math.round(restTime * mSecondInterval);
 	        public void run() {
 	            while (timeLeft >= 0 && !isPaused) {  
 	            	handler.post(new Runnable(){
 	                    public void run() {
+	                    	if (isResuming) {
+	            				//currentSlice = mTimeWheel.getCurrentSubCurProgress();
+	            				isResuming = false;
+	            			}
 	                       updateCountDown(timeLeft, REST_INDEX);
 	                       timeLeft -= 1000;
 	                    }
