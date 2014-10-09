@@ -90,27 +90,27 @@ containing a value of this type.
     }
     public static final class id {
         public static final int action_settings=0x7f0b0011;
-        public static final int action_text=0x7f0b0001;
-        public static final int container=0x7f0b0000;
+        public static final int action_text=0x7f0b0000;
+        public static final int container=0x7f0b0006;
         public static final int hang_time_row=0x7f0b0008;
         public static final int imageView1=0x7f0b0007;
         public static final int minute_text=0x7f0b000e;
         public static final int recovery_time_row=0x7f0b000b;
-        public static final int rep_text=0x7f0b0005;
+        public static final int rep_text=0x7f0b0004;
         public static final int rep_time_row=0x7f0b000a;
         public static final int rest_time_row=0x7f0b0009;
-        public static final int rest_wheel=0x7f0b0003;
+        public static final int rest_wheel=0x7f0b0002;
         public static final int second_text=0x7f0b0010;
         public static final int set_time_row_label=0x7f0b000d;
-        public static final int sound_btn=0x7f0b0006;
+        public static final int sound_btn=0x7f0b0005;
         public static final int start_btn=0x7f0b000c;
         public static final int time_colon=0x7f0b000f;
-        public static final int time_text=0x7f0b0004;
-        public static final int time_wheel=0x7f0b0002;
+        public static final int time_text=0x7f0b0003;
+        public static final int time_wheel=0x7f0b0001;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
-        public static final int fragment_exercise=0x7f030001;
+        public static final int activity_exercise=0x7f030000;
+        public static final int activity_main=0x7f030001;
         public static final int fragment_home=0x7f030002;
         public static final int set_time_row_view=0x7f030003;
     }

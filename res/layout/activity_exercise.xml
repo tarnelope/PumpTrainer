@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin"
-    tools:context="com.ttarn.PumpTrainer.ExerciseFragment">
+    tools:context="com.ttarn.PumpTrainer.ExerciseActivity"
+    android:background="@drawable/background_img">
+    
 
     <TextView
         android:id="@+id/action_text"

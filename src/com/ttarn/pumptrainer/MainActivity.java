@@ -1,44 +1,28 @@
 package com.ttarn.pumptrainer;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
-import android.media.SoundPool;
-import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.ttarn.pumptrainer.ExerciseFragment.ExerciseCompleteListener;
 import com.ttarn.pumptrainer.HomeFragment.TimeSetListener;
 
-public class MainActivity extends Activity implements TimeSetListener, ExerciseCompleteListener {
+public class MainActivity extends Activity implements TimeSetListener {
 	
 	private AudioManager mAudioManager;
 	
-	private static final int FRAGMENT_COUNT = 2;
-	private static final int HOME_INDEX = 0;
-	private static final int EXERCISE_INDEX = 1;
-	private int mCurrentFrag;
-	
-	private int mHangTime;
-	private int mRestTime;
-	private int mRepNum;
-	private int mRecoveryTime;
-	private ArrayList<Integer> mCurrentWorkoutArray;
+	private int[] mCurrentWorkoutArray;
 	
 	private SharedPreferences mSharedPreferences;
 	private SharedPreferences.OnSharedPreferenceChangeListener mPrefListener;
 	
-	private Fragment[] mFrags = new Fragment[FRAGMENT_COUNT];
-	
-	private ExerciseFragment mExerciseFrag;
 	private HomeFragment mHomeFrag;
 
 	@Override
@@ -75,22 +59,9 @@ public class MainActivity extends Activity implements TimeSetListener, ExerciseC
 		return mAudioManager;
 	}
 	
-	private void setupFragArray() {
-		FragmentManager fm = getFragmentManager();
-		FragmentTransaction ft = fm.beginTransaction();
-	
-		mFrags[HOME_INDEX] = mHomeFrag;
-		mFrags[EXERCISE_INDEX] = mExerciseFrag;
-		for (int i = 0; i < FRAGMENT_COUNT; i++) {
-			ft.hide(mFrags[i]);
-		}
-		ft.commit();
-	}
-	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		//showFragment(mCurrentFrag);
 	};
 	
 	@Override
@@ -102,7 +73,6 @@ public class MainActivity extends Activity implements TimeSetListener, ExerciseC
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		savedInstanceState.putInt("currentFragment", mCurrentFrag);
 	}
 	
 
@@ -128,22 +98,16 @@ public class MainActivity extends Activity implements TimeSetListener, ExerciseC
 
 	@Override
 	public void launchExercise(int hang, int rest, int rep, int recovery) {
-		mHangTime = hang;
-		mRestTime = rest;
-		mRepNum = rep;
-		mRecoveryTime = recovery;
 		
-		mCurrentWorkoutArray = new ArrayList<Integer>();
-		mCurrentWorkoutArray.add(mHangTime);
-		mCurrentWorkoutArray.add(mRestTime); 
-		mCurrentWorkoutArray.add(mRepNum);
-		mCurrentWorkoutArray.add(mRecoveryTime);
-		
-		mExerciseFrag = new ExerciseFragment();
-		mExerciseFrag.setWorkoutTimes(mHangTime, mRestTime, mRepNum, mRecoveryTime);
-		mFrags[EXERCISE_INDEX] = mExerciseFrag;
-		
-		showFragment(mExerciseFrag, false);
+		mCurrentWorkoutArray = new int[4];
+		mCurrentWorkoutArray[0] = hang;
+		mCurrentWorkoutArray[1] = rest;
+		mCurrentWorkoutArray[2] = rep;
+		mCurrentWorkoutArray[3] = recovery;
+	
+		Intent exerciseIntent = new Intent(this, ExerciseActivity.class);
+		exerciseIntent.putExtra("timeArray", mCurrentWorkoutArray);
+		startActivity(exerciseIntent);
 	}
 	
 	private void showFragment(Fragment frag, boolean firstTime) {
@@ -163,15 +127,5 @@ public class MainActivity extends Activity implements TimeSetListener, ExerciseC
 	public void onDestroy() {
 		super.onDestroy();
 		mSharedPreferences.unregisterOnSharedPreferenceChangeListener(mPrefListener);
-	}
-
-	/**
-	 * Purpose: To launch exercise complete fragment. There, users will have the option 
-	 * to log their completed workout and comment on it.
-	 */
-	@Override
-	public void launchExerciseComplete() {
-		// TODO Auto-generated method stub
-		
 	}
 }
