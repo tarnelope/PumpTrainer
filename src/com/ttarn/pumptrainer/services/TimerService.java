@@ -29,9 +29,6 @@ public class TimerService extends Service {
 		super.onCreate();
 	}
 	
-	private Runnable updateUI = new Runnable () {
-		//private int hangTimeLeft = 
-	}
 	
 	public void setWorkoutTimes(int hang, int rest, int rep, int recovery) {
 		mHangTime = hang;
