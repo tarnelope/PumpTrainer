@@ -1,10 +1,11 @@
 package com.ttarn.pumptrainer;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Typeface;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,13 +16,22 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.ttarn.pumptrainer.customviews.CircleProgressView;
 
 public class ExerciseFragment extends Fragment {
+	
+	private SoundPool mSoundPool;
+	private int mHighBeepId;
+	private int mLowBeepId;
+	private int mPolishBeepId;
+	private boolean isSoundLoaded;
+	private AudioManager mAudioManager;
+	private float mSetVolume;
+	private float mMaxVolume;
+	private float mVolume;
 	
 	private Typeface mTimeFont;
 	
@@ -70,7 +80,31 @@ public class ExerciseFragment extends Fragment {
 		isResuming = false;
 		
 		mTimeFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Chunkfive.otf");
+		
+		enableSound();
 	};
+	
+	private void enableSound() {
+		mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+		mSoundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
+			
+			@Override
+			public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+				isSoundLoaded = true;
+			}
+		});
+		
+		mHighBeepId = mSoundPool.load(getActivity(), R.raw.high_beep, 1);
+		mLowBeepId = mSoundPool.load(getActivity(), R.raw.low_beep, 1);
+		mPolishBeepId = mSoundPool.load(getActivity(), R.raw.polish_beep, 1);
+	
+		mAudioManager = (AudioManager) getActivity().getSystemService(MainActivity.AUDIO_SERVICE);
+	
+		mSetVolume = (float) mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+		mMaxVolume = (float) mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+		mVolume = mSetVolume/mMaxVolume;
+		
+	}
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -107,6 +141,24 @@ public class ExerciseFragment extends Fragment {
     	mRepText = (TextView) v.findViewById(R.id.rep_text);
     	mRepText.setText(mRepNum + mRepRemaining);
     	
+    	final ImageButton soundBtn = (ImageButton) v.findViewById(R.id.sound_btn);
+    	soundBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (isSoundLoaded) { //Pausing it
+					soundBtn.setImageResource(R.drawable.sound_off);
+					mSoundPool.release();
+					isSoundLoaded = false;
+				} else { //Unpausing it
+					soundBtn.setImageResource(R.drawable.sound_on);
+					enableSound();
+					isSoundLoaded = true;
+				}
+				
+			}
+		});
+    	
     	return v;
 	}
 	
@@ -132,8 +184,11 @@ public class ExerciseFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		mRepText.setText(Integer.toString(mRepNum));
+		
+		if (!isSoundLoaded) {
+			enableSound();
+		}
 		startCountDown(mStartCountDownTime);
-		//runCountDown(mHangTime, HANG_INDEX);
 	}
 	
 	public void resumeTimer() {
@@ -172,8 +227,12 @@ public class ExerciseFragment extends Fragment {
 	            while (cdTime >= 0 && !isPaused) {  
 	                handler.post(new Runnable(){
 	                    public void run() {
+	                    	if (isSoundLoaded && cdTime != 0) {
+	            				mSoundPool.play(mPolishBeepId, mVolume, mVolume, 1, 0, 1f);
+	                    	}
 	                       updateCountDown(cdTime, START_INDEX);
 	                       cdTime -= 1000;
+	                       
 	                    }
 	                });
 	                try {
@@ -215,6 +274,10 @@ public class ExerciseFragment extends Fragment {
 		
 		mTimeWheel.setType(CircleProgressView.ARC);
 		
+		if (isSoundLoaded) {
+			mSoundPool.play(mHighBeepId, mVolume, mVolume, 1, 0, 1f);
+		}
+		
 	    Runnable runnable = new Runnable() {
 			private int hangTimeLeft = Math.round(hangTime * mSecondInterval);
 			double slice = 100.00/mHangTime;
@@ -226,6 +289,9 @@ public class ExerciseFragment extends Fragment {
 	            			if (isResuming) {
 	            				currentSlice = mTimeWheel.getCurrentSubCurProgress();
 	            				isResuming = false;
+	            			}
+	            			if (hangTimeLeft != 0) {
+	            				mSoundPool.play(mHighBeepId, mVolume, mVolume, 1, 0, 1f);
 	            			}
 	            			mTimeWheel.setmSubCurProgress((float)currentSlice);	
 	            			updateCountDown(hangTimeLeft, HANG_INDEX);
@@ -250,6 +316,7 @@ public class ExerciseFragment extends Fragment {
 	private void restCountDown(final int restTime) {
 	
 		mCurrentIndex = REST_INDEX;
+		
 		mRestWheel.setVisibility(View.VISIBLE);
 		mActionText.setText("REST");
 		
@@ -262,6 +329,9 @@ public class ExerciseFragment extends Fragment {
 	                    	if (isResuming) {
 	            				//currentSlice = mTimeWheel.getCurrentSubCurProgress();
 	            				isResuming = false;
+	            			}
+	                    	if (isSoundLoaded && timeLeft != 0) {
+	            				mSoundPool.play(mLowBeepId, mVolume, mVolume, 1, 0, 1f);
 	            			}
 	                       updateCountDown(timeLeft, REST_INDEX);
 	                       timeLeft -= 1000;
@@ -278,6 +348,13 @@ public class ExerciseFragment extends Fragment {
 	        }
 	    };
 	    new Thread(runnable).start();
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		mSoundPool.release();
+		isSoundLoaded = false;
 	}
 	
 }

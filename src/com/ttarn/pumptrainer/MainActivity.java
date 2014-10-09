@@ -7,6 +7,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +19,8 @@ import com.ttarn.pumptrainer.ExerciseFragment.ExerciseCompleteListener;
 import com.ttarn.pumptrainer.HomeFragment.TimeSetListener;
 
 public class MainActivity extends Activity implements TimeSetListener, ExerciseCompleteListener {
+	
+	private AudioManager mAudioManager;
 	
 	private static final int FRAGMENT_COUNT = 2;
 	private static final int HOME_INDEX = 0;
@@ -61,6 +66,13 @@ public class MainActivity extends Activity implements TimeSetListener, ExerciseC
 		
 		showFragment(mHomeFrag, true);
 		
+	}
+	
+	public AudioManager getAudioManager() {
+		if (mAudioManager == null) {
+			mAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+		} 
+		return mAudioManager;
 	}
 	
 	private void setupFragArray() {
@@ -126,8 +138,6 @@ public class MainActivity extends Activity implements TimeSetListener, ExerciseC
 		mCurrentWorkoutArray.add(mRestTime); 
 		mCurrentWorkoutArray.add(mRepNum);
 		mCurrentWorkoutArray.add(mRecoveryTime);
-		
-		Log.d("launchExercise", "Hang time in seconds is " + mHangTime);
 		
 		mExerciseFrag = new ExerciseFragment();
 		mExerciseFrag.setWorkoutTimes(mHangTime, mRestTime, mRepNum, mRecoveryTime);

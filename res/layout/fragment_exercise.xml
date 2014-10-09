@@ -70,7 +70,17 @@
         android:textColor="@android:color/white"
         android:layout_marginTop="@dimen/rep_text_top_margin"
         />
-
+    
+    <ImageButton 
+        android:id="@+id/sound_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sound_on"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/white_80"
+        />
+    
 </RelativeLayout>
 
 <!-- 
