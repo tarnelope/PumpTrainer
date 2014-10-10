@@ -5,11 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/activity_horizontal_margin"
     tools:context="com.ttarn.PumpTrainer.ExerciseActivity"
     android:background="@drawable/background_img">
     
-
     <TextView
         android:id="@+id/action_text"
         android:layout_width="fill_parent"
@@ -57,7 +55,7 @@
         android:layout_below="@+id/action_text"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/time_text_margin"
-        android:layout_marginBottom="@dimen/time_text_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:textSize="@dimen/exercise_time_font_size" 
         android:textColor="@android:color/white"
         />
@@ -73,15 +71,50 @@
         android:layout_marginTop="@dimen/rep_text_top_margin"
         />
     
-    <ImageButton 
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/exercise_options_bar_height"
+        android:layout_alignParentBottom="true">
+        
+        <ImageButton 
         android:id="@+id/sound_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:src="@drawable/sound_on"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="@color/white_80"
+        android:layout_alignParentLeft="true"
+        android:adjustViewBounds="true"
+        android:background="#0000"
+        android:scaleType="fitCenter"
+        android:padding="@dimen/exercise_options_btn_padding"
         />
+        
+        <ImageButton 
+        android:id="@+id/pause_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:src="@drawable/pause"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:background="#0000"
+        android:scaleType="fitCenter"
+        android:padding="@dimen/exercise_options_btn_padding"
+        />
+        
+        <ImageButton 
+        android:id="@+id/save_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:src="@drawable/log"
+        android:layout_alignParentRight="true"
+        android:adjustViewBounds="true"
+        android:background="#0000"
+        android:scaleType="fitCenter"
+        android:padding="@dimen/exercise_options_btn_padding"
+        />
+        
+        
+        
+    </RelativeLayout>
     
 </RelativeLayout>
 

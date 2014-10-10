@@ -8,9 +8,17 @@
     <string name="rest">Rest</string>
     <string name="rep">Rep</string>
     <string name="recovery">Recovery</string>
+    <string name="sets">Sets Completed</string>
+    <string name="notes">Notes</string>
     
     <string name="start">Start</string>
     <string name="pause">Pause</string>
 
     <string name="time_colon"> : </string>
+    <string name="dismiss">Cancel</string>
+    <string name="save">Save</string>
+    
+    <string name="no_workouts">No Workouts Logged. \n What are you waiting for?!</string>
+
+    <string name="see_log">Workout Log</string>
 </resources>

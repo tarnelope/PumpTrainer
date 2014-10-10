@@ -39,15 +39,16 @@ containing a value of this type.
         public static final int timer=0x7f010001;
     }
     public static final class color {
-        public static final int black_75=0x7f060008;
+        public static final int black_75=0x7f060009;
         public static final int dark_teal_80=0x7f060002;
+        public static final int dark_tomato_97=0x7f060007;
         public static final int light_gray=0x7f060005;
         public static final int light_teal_60=0x7f060004;
         public static final int light_teal_80=0x7f060003;
         public static final int marigold=0x7f060000;
         public static final int marigold_60=0x7f060001;
         public static final int tomato_red_80=0x7f060006;
-        public static final int white_80=0x7f060007;
+        public static final int white_80=0x7f060008;
     }
     public static final class dimen {
         public static final int action_font_size=0x7f07000a;
@@ -64,6 +65,10 @@ containing a value of this type.
         public static final int activity_vertical_margin=0x7f070001;
         public static final int circle_progress_view_padding=0x7f070011;
         public static final int countdown_font_size=0x7f070009;
+        public static final int dialog_font_size=0x7f070014;
+        public static final int empty_text_width=0x7f070015;
+        public static final int exercise_options_bar_height=0x7f070012;
+        public static final int exercise_options_btn_padding=0x7f070013;
         public static final int exercise_time_font_size=0x7f07000b;
         public static final int home_font_size=0x7f070008;
         public static final int rep_font_size=0x7f07000c;
@@ -75,44 +80,77 @@ containing a value of this type.
         public static final int start_button_radius=0x7f070006;
         public static final int time_box_width=0x7f070002;
         public static final int time_text_margin=0x7f07000f;
+        public static final int wo_date_font_size=0x7f070017;
+        public static final int wo_margin=0x7f070018;
+        public static final int wo_title_font_size=0x7f07001a;
+        public static final int wo_value_font_size=0x7f070019;
+        public static final int wo_width=0x7f070016;
     }
     public static final class drawable {
         public static final int background_img=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int logo=0x7f020002;
-        public static final int logo2=0x7f020003;
-        public static final int rest_wheel=0x7f020004;
-        public static final int set_time_row_bg=0x7f020005;
-        public static final int sound_off=0x7f020006;
-        public static final int sound_on=0x7f020007;
-        public static final int start_button_default=0x7f020008;
-        public static final int time_wheel=0x7f020009;
+        public static final int delete_btn=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int log=0x7f020003;
+        public static final int logo=0x7f020004;
+        public static final int logo2=0x7f020005;
+        public static final int pause=0x7f020006;
+        public static final int pause_off=0x7f020007;
+        public static final int rest_wheel=0x7f020008;
+        public static final int set_time_row_bg=0x7f020009;
+        public static final int sound_off=0x7f02000a;
+        public static final int sound_on=0x7f02000b;
+        public static final int start_button_default=0x7f02000c;
+        public static final int time_wheel=0x7f02000d;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b0011;
         public static final int action_text=0x7f0b0000;
-        public static final int container=0x7f0b0006;
-        public static final int hang_time_row=0x7f0b0008;
-        public static final int imageView1=0x7f0b0007;
-        public static final int minute_text=0x7f0b000e;
-        public static final int recovery_time_row=0x7f0b000b;
+        public static final int container=0x7f0b0008;
+        public static final int delete_wo_btn=0x7f0b0018;
+        public static final int dialog_hang_time=0x7f0b0009;
+        public static final int dialog_notes=0x7f0b000e;
+        public static final int dialog_rec_time=0x7f0b000c;
+        public static final int dialog_rep_time=0x7f0b000b;
+        public static final int dialog_rest_time=0x7f0b000a;
+        public static final int dialog_sets=0x7f0b000d;
+        public static final int dismiss_btn=0x7f0b000f;
+        public static final int empty_logo=0x7f0b0010;
+        public static final int hang_time_row=0x7f0b0012;
+        public static final int imageView1=0x7f0b0011;
+        public static final int minute_text=0x7f0b0022;
+        public static final int pause_btn=0x7f0b0006;
+        public static final int recovery_time_row=0x7f0b0015;
         public static final int rep_text=0x7f0b0004;
-        public static final int rep_time_row=0x7f0b000a;
-        public static final int rest_time_row=0x7f0b0009;
+        public static final int rep_time_row=0x7f0b0014;
+        public static final int rest_time_row=0x7f0b0013;
         public static final int rest_wheel=0x7f0b0002;
-        public static final int second_text=0x7f0b0010;
-        public static final int set_time_row_label=0x7f0b000d;
+        public static final int save_btn=0x7f0b0007;
+        public static final int second_text=0x7f0b0024;
+        public static final int see_log=0x7f0b0025;
+        public static final int set_time_row_label=0x7f0b0021;
         public static final int sound_btn=0x7f0b0005;
-        public static final int start_btn=0x7f0b000c;
-        public static final int time_colon=0x7f0b000f;
+        public static final int start_btn=0x7f0b0016;
+        public static final int time_colon=0x7f0b0023;
         public static final int time_text=0x7f0b0003;
         public static final int time_wheel=0x7f0b0001;
+        public static final int wo_all_values=0x7f0b0019;
+        public static final int wo_date=0x7f0b0017;
+        public static final int wo_hang_val=0x7f0b001a;
+        public static final int wo_notes=0x7f0b0020;
+        public static final int wo_notes_title=0x7f0b001f;
+        public static final int wo_rec_val=0x7f0b001d;
+        public static final int wo_rep_val=0x7f0b001c;
+        public static final int wo_rest_val=0x7f0b001b;
+        public static final int wo_set_val=0x7f0b001e;
     }
     public static final class layout {
         public static final int activity_exercise=0x7f030000;
-        public static final int activity_main=0x7f030001;
-        public static final int fragment_home=0x7f030002;
-        public static final int set_time_row_view=0x7f030003;
+        public static final int activity_history=0x7f030001;
+        public static final int activity_main=0x7f030002;
+        public static final int dialogfrag_log=0x7f030003;
+        public static final int empty=0x7f030004;
+        public static final int fragment_home=0x7f030005;
+        public static final int item_workout=0x7f030006;
+        public static final int set_time_row_view=0x7f030007;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;
@@ -125,13 +163,19 @@ containing a value of this type.
     public static final class string {
         public static final int action_settings=0x7f080001;
         public static final int app_name=0x7f080000;
+        public static final int dismiss=0x7f08000b;
         public static final int hang=0x7f080002;
-        public static final int pause=0x7f080007;
+        public static final int no_workouts=0x7f08000d;
+        public static final int notes=0x7f080007;
+        public static final int pause=0x7f080009;
         public static final int recovery=0x7f080005;
         public static final int rep=0x7f080004;
         public static final int rest=0x7f080003;
-        public static final int start=0x7f080006;
-        public static final int time_colon=0x7f080008;
+        public static final int save=0x7f08000c;
+        public static final int see_log=0x7f08000e;
+        public static final int sets=0x7f080006;
+        public static final int start=0x7f080008;
+        public static final int time_colon=0x7f08000a;
     }
     public static final class style {
         /** 

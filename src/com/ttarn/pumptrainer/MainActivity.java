@@ -89,7 +89,9 @@ public class MainActivity extends Activity implements TimeSetListener {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		if (id == R.id.see_log) {
+			Intent i = new Intent(this, HistoryActivity.class);
+			startActivity(i);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

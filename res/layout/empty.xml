@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_img" >
+    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/black_75" />
+
+    <ImageView
+        android:id="@+id/empty_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp"
+        android:contentDescription="@string/no_workouts"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:src="@drawable/logo2" />
+
+    <TextView
+        android:layout_width="@dimen/empty_text_width"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/empty_logo"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="@string/no_workouts"
+        android:textColor="@color/white_80"
+        android:textSize="@dimen/dialog_font_size"
+        android:textStyle="bold" />
+
+</RelativeLayout>

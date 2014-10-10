@@ -1,6 +1,7 @@
 package com.ttarn.pumptrainer;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.media.AudioManager;
@@ -8,7 +9,6 @@ import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -36,6 +36,7 @@ public class ExerciseActivity extends Activity {
 	private TextView mRepText;
 	private CircleProgressView mRestWheel;
 	private CircleProgressView mTimeWheel;
+	private ImageButton mPauseBtn;
 	
 	private boolean isPaused;
 	private boolean isResuming;
@@ -47,8 +48,8 @@ public class ExerciseActivity extends Activity {
 	private static int mRepNum;
 	private int mCurrentRepNum;
 	private static int mRecoveryTime;
-	
 	private int mCurrentActionTime;
+	private int mSetsCompleted;
 	
 	private long mSecondInterval = 1000;
 	
@@ -97,22 +98,8 @@ public class ExerciseActivity extends Activity {
 		
 		mRestWheel = (CircleProgressView) findViewById(R.id.rest_wheel);
     	mRestWheel.setVisibility(View.GONE);
-    	mRestWheel.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				pauseCountDown();
-			}
-		});
     	
     	mTimeWheel = (CircleProgressView) findViewById(R.id.time_wheel);
-    	mTimeWheel.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				pauseCountDown();
-			}
-		});
     	
     	mActionText = (TextView) findViewById(R.id.action_text);
     	mActionText.setTypeface(mTimeFont);
@@ -142,6 +129,28 @@ public class ExerciseActivity extends Activity {
 				
 			}
 		});
+    	
+    	mPauseBtn = (ImageButton) findViewById(R.id.pause_btn);
+    	mPauseBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				pauseCountDown();
+			}
+		});
+    	
+    	final ImageButton logBtn = (ImageButton) findViewById(R.id.save_btn);
+    	logBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				DialogFragment log = LogDialogFragment.newInstance(mHangTime, mRestTime, mRepNum, mRecoveryTime, mSetsCompleted);
+				
+				log.show(getFragmentManager().beginTransaction(), "Save Pump");
+				
+			}
+		});
+    	
 	};
 	
 	@Override
@@ -150,6 +159,7 @@ public class ExerciseActivity extends Activity {
 		if (!isSoundLoaded) 
 			enableSound();
 		if (isFirstTime)
+			mSetsCompleted = 0;
 			countdown(START_COUNTDOWN_TIME, START_INDEX);
 	}
 	
@@ -177,11 +187,14 @@ public class ExerciseActivity extends Activity {
 	private void pauseCountDown() {
 		isPaused = !isPaused;
 		if (!isPaused) {
+			mPauseBtn.setImageResource(R.drawable.pause);
 			mActionText.setBackgroundColor(getResources().getColor(R.color.black_75));
 			resumeTimer();
 		} else {
+			mPauseBtn.setImageResource(R.drawable.pause_off);
 			mActionText.setText("PAUSED");
-			mActionText.setBackgroundColor(getResources().getColor(R.color.tomato_red_80));
+			mActionText.setBackgroundColor(getResources().getColor(R.color.dark_tomato_97));
+			
 		}
 	}
 	
@@ -219,6 +232,7 @@ public class ExerciseActivity extends Activity {
     		mRestWheel.setVisibility(View.GONE);
     		countdown(mHangTime, HANG_INDEX);
     	} else if (actionIndex == REST_INDEX && mCurrentRepNum == 1){
+    		mSetsCompleted++;
     		countdown(mRecoveryTime, RECOVERY_INDEX);
     	} else {
     		mCurrentRepNum = mRepNum;
@@ -226,9 +240,7 @@ public class ExerciseActivity extends Activity {
     	}
 	}
 	
-	
-	
-private void countdown(final int time, final int index) {
+	private void countdown(final int time, final int index) {
 		
 		mCurrentIndex = index;
 		
