@@ -158,9 +158,13 @@ public class ExerciseActivity extends Activity {
 		super.onResume();
 		if (!isSoundLoaded) 
 			enableSound();
-		if (isFirstTime)
+		if (isFirstTime) {
 			mSetsCompleted = 0;
+			isFirstTime = false;
 			countdown(START_COUNTDOWN_TIME, START_INDEX);
+		} else {
+			
+		}
 	}
 	
 	private void enableSound() {
@@ -246,7 +250,6 @@ public class ExerciseActivity extends Activity {
 		
 		switch (index) {
 			case 0: //Start
-				isFirstTime = false;
 				
 				mCurrentBeepId = mPolishBeepId;
 				
@@ -323,6 +326,7 @@ public class ExerciseActivity extends Activity {
 		super.onPause();
 		mSoundPool.release();
 		isSoundLoaded = false;
+		isResuming = true;
 	}
 	
 }

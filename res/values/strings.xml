@@ -19,6 +19,7 @@
     <string name="save">Save</string>
     
     <string name="no_workouts">No Workouts Logged. \n What are you waiting for?!</string>
-
-    <string name="see_log">Workout Log</string>
+	
+    <string name="new_wo">New</string>
+    <string name="see_log">Log</string>
 </resources>

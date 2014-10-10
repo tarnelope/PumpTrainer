@@ -117,6 +117,7 @@ containing a value of this type.
         public static final int hang_time_row=0x7f0b0012;
         public static final int imageView1=0x7f0b0011;
         public static final int minute_text=0x7f0b0022;
+        public static final int new_wo=0x7f0b0025;
         public static final int pause_btn=0x7f0b0006;
         public static final int recovery_time_row=0x7f0b0015;
         public static final int rep_text=0x7f0b0004;
@@ -125,7 +126,7 @@ containing a value of this type.
         public static final int rest_wheel=0x7f0b0002;
         public static final int save_btn=0x7f0b0007;
         public static final int second_text=0x7f0b0024;
-        public static final int see_log=0x7f0b0025;
+        public static final int see_log=0x7f0b0026;
         public static final int set_time_row_label=0x7f0b0021;
         public static final int sound_btn=0x7f0b0005;
         public static final int start_btn=0x7f0b0016;
@@ -165,6 +166,7 @@ containing a value of this type.
         public static final int app_name=0x7f080000;
         public static final int dismiss=0x7f08000b;
         public static final int hang=0x7f080002;
+        public static final int new_wo=0x7f08000e;
         public static final int no_workouts=0x7f08000d;
         public static final int notes=0x7f080007;
         public static final int pause=0x7f080009;
@@ -172,7 +174,7 @@ containing a value of this type.
         public static final int rep=0x7f080004;
         public static final int rest=0x7f080003;
         public static final int save=0x7f08000c;
-        public static final int see_log=0x7f08000e;
+        public static final int see_log=0x7f08000f;
         public static final int sets=0x7f080006;
         public static final int start=0x7f080008;
         public static final int time_colon=0x7f08000a;

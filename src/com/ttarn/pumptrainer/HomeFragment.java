@@ -2,20 +2,18 @@ package com.ttarn.pumptrainer;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.ttarn.pumptrainer.customviews.SetTimeRowView;
 
 public class HomeFragment extends Fragment {
-	
 	
 	private SetTimeRowView mHangRow; 
 	private SetTimeRowView mRestRow;
@@ -65,7 +63,12 @@ public class HomeFragment extends Fragment {
 				int repNum = mRepRow.getSeconds();
 				int recoveryTime = mRecoveryRow.getMinutes() + mRecoveryRow.getSeconds();
 				
-				mTimeSetListener.launchExercise(hangTime, restTime, repNum, recoveryTime);
+				if (hangTime == 0 || restTime == 0 || repNum == 0 || recoveryTime == 0) {
+					Toast.makeText(getActivity(), "Sorry, all fields must be greater than 0. Doing nothing is not a workout.",
+							   Toast.LENGTH_LONG).show();
+				} else {
+					mTimeSetListener.launchExercise(hangTime, restTime, repNum, recoveryTime);
+				}
 				
 			}
 		});
