@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +24,9 @@ public class HistoryActivity extends ListActivity {
 	
 	private WorkoutDataSource mWDS;
 	
+	private Typeface chunkfive; 
+	private Typeface kozoko;
+	
 	public HistoryActivity() {
 		
 	}
@@ -34,6 +38,9 @@ public class HistoryActivity extends ListActivity {
 		
 		mWDS = new WorkoutDataSource(this);
 		mWDS.open();
+		
+		chunkfive = Fonts.getChunkfive(this);
+		kozoko = Fonts.getKozopro(this);
 		
 		ArrayList<Workout> workouts = mWDS.getAllWorkouts();
 		
@@ -53,6 +60,18 @@ public class HistoryActivity extends ListActivity {
 		super.onPause();
 	}
 	
+	private static class ViewHolder {
+		TextView dateVal;
+		TextView hangVal;
+		TextView restVal;
+		TextView repVal;
+		TextView recVal;
+		TextView setsVal;
+		TextView notesVal;
+		
+		ImageView btn;
+	}
+	
 	private class WorkoutAdapter extends ArrayAdapter<Workout> {
 		
 		ArrayList<Workout> woAdapterList;
@@ -64,35 +83,53 @@ public class HistoryActivity extends ListActivity {
 		
 		@Override
 		public View getView(int position, View cView, ViewGroup parent) {
+			
 			final Workout wo = getItem(position);
 			
-			if (cView == null) {
-				cView = LayoutInflater.from(getContext()).inflate(R.layout.item_workout, parent, false);
+			View v = cView;
+			ViewHolder vh = null;
+			
+			if (v == null) {
+				
+				v = LayoutInflater.from(getContext()).inflate(R.layout.item_workout, parent, false);
+				vh = new ViewHolder();
+				
+				vh.dateVal = (TextView) v.findViewById(R.id.wo_date);
+				vh.hangVal = (TextView) v.findViewById(R.id.wo_hang_val);
+				vh.restVal = (TextView) v.findViewById(R.id.wo_rest_val);
+				vh.repVal = (TextView) v.findViewById(R.id.wo_rep_val);
+				vh.recVal = (TextView) v.findViewById(R.id.wo_rec_val);
+				vh.setsVal = (TextView) v.findViewById(R.id.wo_set_val);
+				vh.notesVal = (TextView) v.findViewById(R.id.wo_notes);
+				vh.btn = (ImageView) v.findViewById(R.id.delete_wo_btn);
+				
+				v.setTag(vh);
+			} else {
+				vh = (ViewHolder) v.getTag();
 			}
 			
-			TextView dateVal = (TextView) cView.findViewById(R.id.wo_date);
-			dateVal.setText(wo.getDate());
+			vh.dateVal.setTypeface(chunkfive);
+			vh.dateVal.setText(wo.getDate());
 			
-			TextView hangVal = (TextView) cView.findViewById(R.id.wo_hang_val);
-			hangVal.setText(String.valueOf(wo.getHang()));
+			vh.hangVal.setTypeface(kozoko);
+			vh.hangVal.setText(String.valueOf(wo.getHang()));
 			
-			TextView restVal = (TextView) cView.findViewById(R.id.wo_rest_val);
-			restVal.setText(String.valueOf(wo.getRest()));
+			vh.restVal.setTypeface(kozoko);
+			vh.restVal.setText(String.valueOf(wo.getRest()));
 			
-			TextView repVal = (TextView) cView.findViewById(R.id.wo_rep_val);
-			repVal.setText(String.valueOf(wo.getRep()));
+			vh.repVal.setTypeface(kozoko);
+			vh.repVal.setText(String.valueOf(wo.getRep()));
 			
-			TextView recVal = (TextView) cView.findViewById(R.id.wo_rec_val);
-			recVal.setText(String.valueOf(wo.getRecovery()));
+			vh.recVal.setTypeface(kozoko);
+			vh.recVal.setText(String.valueOf(wo.getRecovery()));
 			
-			TextView setVal = (TextView) cView.findViewById(R.id.wo_set_val);
-			setVal.setText(String.valueOf(wo.getCompletedSets()));
+			vh.setsVal.setTypeface(kozoko);
+			vh.setsVal.setText(String.valueOf(wo.getCompletedSets()));
 			
-			TextView notesVal = (TextView) cView.findViewById(R.id.wo_notes);
-			notesVal.setText(wo.getNotes());
+			vh.notesVal.setTypeface(kozoko);
+			vh.notesVal.setText(wo.getNotes());
 			
-			ImageView btn = (ImageView) cView.findViewById(R.id.delete_wo_btn);
-			btn.setOnClickListener(new OnClickListener() {
+			vh.btn.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
@@ -103,7 +140,7 @@ public class HistoryActivity extends ListActivity {
 				}
 			});
 			
-			return cView;
+			return v;
 		}
 		
 	}

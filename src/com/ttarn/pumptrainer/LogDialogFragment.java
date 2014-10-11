@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ public class LogDialogFragment extends DialogFragment {
 		mRepNum = String.valueOf(rep);
 		mRecoveryTime = String.valueOf(recovery);
 		mSetsCompleted = String.valueOf(setsCompleted);
+		
 		return new LogDialogFragment();
 	}
 	
@@ -49,22 +51,30 @@ public class LogDialogFragment extends DialogFragment {
             Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.dialogfrag_log, container, false);
 		
+		Typeface valueFont = Fonts.getKozopro(getActivity());
+		
 		TextView hangText = (TextView) v.findViewById(R.id.dialog_hang_time);
+		hangText.setTypeface(valueFont);
 		hangText.setText(mHangTime);
 		
 		TextView restText = (TextView) v.findViewById(R.id.dialog_rest_time);
+		restText.setTypeface(valueFont);
 		restText.setText(mRestTime);
 		
 		TextView repText = (TextView) v.findViewById(R.id.dialog_rep_time);
+		repText.setTypeface(valueFont);
 		repText.setText(mRepNum);
 		
 		TextView recText = (TextView) v.findViewById(R.id.dialog_rec_time);
+		recText.setTypeface(valueFont);
 		recText.setText(mRecoveryTime);
 		
 		TextView setText = (TextView) v.findViewById(R.id.dialog_sets);
+		setText.setTypeface(valueFont);
 		setText.setText(mSetsCompleted);
 		
 		mNotesText = (EditText) v.findViewById(R.id.dialog_notes);
+		mNotesText.setTypeface(valueFont);
 		
 		Button cancelBtn = (Button) v.findViewById(R.id.dismiss_btn);
 		cancelBtn.setOnClickListener(new OnClickListener() {

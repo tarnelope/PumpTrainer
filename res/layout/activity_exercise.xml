@@ -112,22 +112,6 @@
         android:padding="@dimen/exercise_options_btn_padding"
         />
         
-        
-        
     </RelativeLayout>
     
 </RelativeLayout>
-
-<!-- 
-<ImageView
-        android:id="@+id/time_wheel"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_below="@+id/action_text"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="105dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/time_wheel" 
-        />
- -->

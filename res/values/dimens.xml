@@ -30,11 +30,12 @@
     
     <dimen name="empty_text_width">205dp</dimen>
     
-    <dimen name="wo_width">52dp</dimen>
-    <dimen name="wo_date_font_size">25sp</dimen>
-    <dimen name="wo_margin">5dp</dimen>
-    <dimen name="wo_value_font_size">18sp</dimen>
-    <dimen name="wo_title_font_size">10sp</dimen>
+    <dimen name="wo_width">55dp</dimen>
+    <dimen name="wo_date_font_size">20sp</dimen>
+    <dimen name="wo_margin">6dp</dimen>
+    <dimen name="wo_title_font_size">11sp</dimen>
+    <dimen name="wo_value_font_size">22sp</dimen>
+    <dimen name="wo_notes_font_size">16sp</dimen>
     
 
 </resources>

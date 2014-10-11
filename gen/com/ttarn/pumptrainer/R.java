@@ -82,8 +82,9 @@ containing a value of this type.
         public static final int time_text_margin=0x7f07000f;
         public static final int wo_date_font_size=0x7f070017;
         public static final int wo_margin=0x7f070018;
-        public static final int wo_title_font_size=0x7f07001a;
-        public static final int wo_value_font_size=0x7f070019;
+        public static final int wo_notes_font_size=0x7f07001b;
+        public static final int wo_title_font_size=0x7f070019;
+        public static final int wo_value_font_size=0x7f07001a;
         public static final int wo_width=0x7f070016;
     }
     public static final class drawable {
@@ -101,6 +102,7 @@ containing a value of this type.
         public static final int sound_on=0x7f02000b;
         public static final int start_button_default=0x7f02000c;
         public static final int time_wheel=0x7f02000d;
+        public static final int workout_value_style=0x7f02000e;
     }
     public static final class id {
         public static final int action_text=0x7f0b0000;
@@ -136,8 +138,8 @@ containing a value of this type.
         public static final int wo_all_values=0x7f0b0019;
         public static final int wo_date=0x7f0b0017;
         public static final int wo_hang_val=0x7f0b001a;
-        public static final int wo_notes=0x7f0b0020;
-        public static final int wo_notes_title=0x7f0b001f;
+        public static final int wo_notes=0x7f0b001f;
+        public static final int wo_notes_title=0x7f0b0020;
         public static final int wo_rec_val=0x7f0b001d;
         public static final int wo_rep_val=0x7f0b001c;
         public static final int wo_rest_val=0x7f0b001b;

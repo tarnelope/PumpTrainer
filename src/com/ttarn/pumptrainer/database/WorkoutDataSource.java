@@ -1,7 +1,6 @@
 package com.ttarn.pumptrainer.database;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,6 +8,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.ttarn.pumptrainer.PumpTrainerApplication;
 

@@ -9,6 +9,7 @@ import com.ttarn.pumptrainer.database.WorkoutDbHelper;
 public class PumpTrainerApplication extends Application {
 	
 	private WorkoutDbHelper mHelper;
+	private boolean isFirstTime;
 	
 	public PumpTrainerApplication() {
 		
@@ -21,6 +22,7 @@ public class PumpTrainerApplication extends Application {
 	@Override
 	public void onCreate() {
 		mHelper = new WorkoutDbHelper(getApplicationContext());
+		isFirstTime = true;
 	}
 	
 	public SQLiteDatabase getReadableDb() {
@@ -33,5 +35,13 @@ public class PumpTrainerApplication extends Application {
 	
 	public WorkoutDbHelper getWorkoutDbHelper() {
 		return mHelper;
+	}
+	
+	public void setFirstTime(boolean b) {
+		isFirstTime = b;
+	}
+	
+	public boolean isFirstTime() {
+		return isFirstTime;
 	}
 }

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ttarn.pumptrainer.Fonts;
 import com.ttarn.pumptrainer.R;
 
 public class SetTimeRowView extends RelativeLayout {
@@ -40,8 +41,8 @@ public class SetTimeRowView extends RelativeLayout {
 			a.recycle();
 		}
 		
-		mFont = Typeface.createFromAsset(context.getAssets(), "fonts/Chunkfive.otf");
-		mEditTextFont = Typeface.createFromAsset(context.getAssets(), "fonts/KozGoPro.otf");
+		mFont = Fonts.getChunkfive(context);
+		mEditTextFont = Fonts.getKozopro(context);
 		
 		View.inflate(context, R.layout.set_time_row_view, this);
 		

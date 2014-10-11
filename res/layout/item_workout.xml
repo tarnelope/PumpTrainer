@@ -22,22 +22,27 @@
     <ImageView 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:paddingTop="0dp"
         android:id="@+id/delete_wo_btn"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/delete_btn"/>
+        android:src="@drawable/delete_btn"
+        android:scaleType="fitCenter"/>
     
     <LinearLayout 
         android:id="@+id/wo_all_values"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/wo_date"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="fill_horizontal">
 	    <LinearLayout
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:orientation="vertical"
 	        android:layout_marginRight="@dimen/wo_margin"
+	        android:background="@drawable/workout_value_style"
 	        >
 	        <TextView 
 		        android:gravity="center"
@@ -62,6 +67,7 @@
 	        android:layout_height="wrap_content"
 	        android:orientation="vertical"
 	        android:layout_marginRight="@dimen/wo_margin"
+	        android:background="@drawable/workout_value_style"
 	        >
 	        <TextView 
 		        android:gravity="center"
@@ -87,6 +93,7 @@
 	        android:layout_height="wrap_content"
 	        android:orientation="vertical"
 	        android:layout_marginRight="@dimen/wo_margin"
+	        android:background="@drawable/workout_value_style"
 	        >
 	        <TextView 
 		        android:gravity="center"
@@ -112,6 +119,7 @@
 	        android:layout_height="wrap_content"
 	        android:orientation="vertical"
 	        android:layout_marginRight="@dimen/wo_margin"
+	        android:background="@drawable/workout_value_style"
 	        >
 	        <TextView 
 		        android:gravity="center"
@@ -136,6 +144,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:orientation="vertical"
+	        android:background="@drawable/workout_value_style"
 	        >
 	        <TextView 
 		        android:gravity="center"
@@ -158,25 +167,35 @@
 	    
     </LinearLayout>
     
-    <TextView 
+  <LinearLayout 
+        android:padding="3dp"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_width="@dimen/wo_width"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:text="@string/notes"
-        android:textColor="@android:color/white"
-        android:layout_below="@id/wo_all_values"
-        android:color="@android:color/white"
-        android:id="@+id/wo_notes_title"/>
-    
-    <TextView 
-        android:textColor="@android:color/white"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/wo_notes"
-        android:textSize="@dimen/wo_value_font_size"
-        android:color="@android:color/white"
-        android:layout_below="@id/wo_notes_title"
-	/>
+        android:layout_below="@id/wo_all_values"
+        android:orientation="vertical"
+        android:background="@drawable/workout_value_style">
+	   
+	    <TextView 
+	        android:layout_margin="3dp"
+	        android:textColor="@android:color/white"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/wo_notes"
+	        android:textSize="@dimen/wo_notes_font_size"
+	        android:color="@android:color/white"
+		/>
+	     <TextView 
+	        android:layout_margin="3dp"
+	        android:layout_width="@dimen/wo_width"
+	        android:layout_height="wrap_content"
+	        android:text="@string/notes"
+	        android:textColor="@android:color/white"
+	        android:textSize="@dimen/wo_title_font_size"
+	        android:color="@android:color/white"
+	        android:id="@+id/wo_notes_title"
+	        android:gravity="center_horizontal"/>
+	    
+    </LinearLayout>
 
 </RelativeLayout>

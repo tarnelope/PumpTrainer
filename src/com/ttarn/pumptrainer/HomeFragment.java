@@ -36,12 +36,6 @@ public class HomeFragment extends Fragment {
 		super.onAttach(activity);
 		mTimeSetListener = (TimeSetListener) activity;
 	};
-	
-	@Override
-    public void onCreate(Bundle bundle) {
-        super.onCreate(bundle);
-       
-    }
     
     @Override
     public ViewGroup onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -63,8 +57,10 @@ public class HomeFragment extends Fragment {
 				int repNum = mRepRow.getSeconds();
 				int recoveryTime = mRecoveryRow.getMinutes() + mRecoveryRow.getSeconds();
 				
+				PumpTrainerApplication.get(getActivity()).setFirstTime(true);
+				
 				if (hangTime == 0 || restTime == 0 || repNum == 0 || recoveryTime == 0) {
-					Toast.makeText(getActivity(), "Sorry, all fields must be greater than 0. Doing nothing is not a workout.",
+					Toast.makeText(getActivity(), "Sorry, doing nothing does not count as a workout. Please fill all fields to start.",
 							   Toast.LENGTH_LONG).show();
 				} else {
 					mTimeSetListener.launchExercise(hangTime, restTime, repNum, recoveryTime);

@@ -9,6 +9,8 @@ import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -40,7 +42,6 @@ public class ExerciseActivity extends Activity {
 	
 	private boolean isPaused;
 	private boolean isResuming;
-	private boolean isFirstTime;
 	
 	private static int START_COUNTDOWN_TIME = 3;
 	private static int mHangTime;
@@ -90,9 +91,8 @@ public class ExerciseActivity extends Activity {
 		
 		isPaused = false;
 		isResuming = false;
-		isFirstTime = true;
 		
-		mTimeFont = Typeface.createFromAsset(this.getAssets(), "fonts/Chunkfive.otf");
+		mTimeFont = Fonts.getChunkfive(this);
 		
 		enableSound();
 		
@@ -158,13 +158,39 @@ public class ExerciseActivity extends Activity {
 		super.onResume();
 		if (!isSoundLoaded) 
 			enableSound();
-		if (isFirstTime) {
+		if (PumpTrainerApplication.get(this).isFirstTime()) {
 			mSetsCompleted = 0;
-			isFirstTime = false;
+			PumpTrainerApplication.get(this).setFirstTime(false);
 			countdown(START_COUNTDOWN_TIME, START_INDEX);
 		} else {
 			
 		}
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		switch (id) {
+			case R.id.see_log:
+				Intent i = new Intent(this, HistoryActivity.class);
+				startActivity(i);
+				break;
+			case R.id.new_wo:
+				Intent mainI = new Intent(this, MainActivity.class);
+				startActivity(mainI);
+				break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 	
 	private void enableSound() {
