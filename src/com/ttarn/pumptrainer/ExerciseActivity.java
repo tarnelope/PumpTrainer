@@ -16,9 +16,10 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.ttarn.pumptrainer.LogDialogFragment.LogDialogListener;
 import com.ttarn.pumptrainer.customviews.CircleProgressView;
 
-public class ExerciseActivity extends Activity {
+public class ExerciseActivity extends Activity implements LogDialogListener {
 	
 	private SoundPool mSoundPool;
 	private int mHighBeepId;
@@ -42,6 +43,7 @@ public class ExerciseActivity extends Activity {
 	
 	private boolean isPaused;
 	private boolean isResuming;
+	private boolean isSetFromLog;
 	
 	private static int START_COUNTDOWN_TIME = 3;
 	private static int mHangTime;
@@ -69,6 +71,8 @@ public class ExerciseActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_exercise);
 		
+		enableSound();
+		
 		Intent receivedIntent = getIntent();
 		int[] timesArray = receivedIntent.getIntArrayExtra("timeArray");
 		for (int i = 0; i < timesArray.length; i++) {
@@ -89,12 +93,11 @@ public class ExerciseActivity extends Activity {
 			}
 		}
 		
+		isSetFromLog = receivedIntent.getBooleanExtra("new", false);
 		isPaused = false;
 		isResuming = false;
 		
 		mTimeFont = Fonts.getChunkfive(this);
-		
-		enableSound();
 		
 		mRestWheel = (CircleProgressView) findViewById(R.id.rest_wheel);
     	mRestWheel.setVisibility(View.GONE);
@@ -119,7 +122,8 @@ public class ExerciseActivity extends Activity {
 			public void onClick(View v) {
 				if (isSoundLoaded) { //Pausing it
 					soundBtn.setImageResource(R.drawable.sound_off);
-					mSoundPool.release();
+					//mSoundPool.release();
+					PumpTrainerApplication.get(getBaseContext()).resetSoundPool();
 					isSoundLoaded = false;
 				} else { //Unpausing it
 					soundBtn.setImageResource(R.drawable.sound_on);
@@ -145,25 +149,25 @@ public class ExerciseActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				DialogFragment log = LogDialogFragment.newInstance(mHangTime, mRestTime, mRepNum, mRecoveryTime, mSetsCompleted);
-				
+				pauseCountDown();
 				log.show(getFragmentManager().beginTransaction(), "Save Pump");
-				
 			}
 		});
-    	
 	};
 	
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (!isSoundLoaded) 
+		if (!isSoundLoaded) {
 			enableSound();
-		if (PumpTrainerApplication.get(this).isFirstTime()) {
+		}
+		if (PumpTrainerApplication.get(this).isFirstTime() || isSetFromLog) {
 			mSetsCompleted = 0;
-			PumpTrainerApplication.get(this).setFirstTime(false);
+			Thread.currentThread().interrupt();
 			countdown(START_COUNTDOWN_TIME, START_INDEX);
-		} else {
-			
+			if (isSoundLoaded) {
+				mSoundPool.play(mPolishBeepId, mVolume, mVolume, 1, 0, 1f);
+	    	}
 		}
 	}
 	
@@ -194,24 +198,19 @@ public class ExerciseActivity extends Activity {
 	}
 	
 	private void enableSound() {
-		mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
-		mSoundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
-			
-			@Override
-			public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-				isSoundLoaded = true;
-			}
-		});
+		mSoundPool = PumpTrainerApplication.get(this).getSoundPool();
 		
+		mPolishBeepId = mSoundPool.load(this, R.raw.polish_beep, 1);
 		mHighBeepId = mSoundPool.load(this, R.raw.high_beep, 1);
 		mLowBeepId = mSoundPool.load(this, R.raw.low_beep, 1);
-		mPolishBeepId = mSoundPool.load(this, R.raw.polish_beep, 1);
 	
 		mAudioManager = (AudioManager) this.getSystemService(MainActivity.AUDIO_SERVICE);
 	
 		mSetVolume = (float) mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 		mMaxVolume = (float) mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 		mVolume = mSetVolume/mMaxVolume;
+		
+		isSoundLoaded = true;
 	}
 	
 	private void pauseCountDown() {
@@ -266,11 +265,14 @@ public class ExerciseActivity extends Activity {
     		countdown(mRecoveryTime, RECOVERY_INDEX);
     	} else {
     		mCurrentRepNum = mRepNum;
+    		mRepText.setText(String.valueOf(mCurrentRepNum) + mRepRemaining);
     		countdown(mHangTime, HANG_INDEX);
     	}
 	}
 	
 	private void countdown(final int time, final int index) {
+		
+		PumpTrainerApplication.get(this).setFirstTime(false);
 		
 		mCurrentIndex = index;
 		
@@ -347,12 +349,21 @@ public class ExerciseActivity extends Activity {
 	    new Thread(runnable).start();
 	}
 	
+	private void pauseSound() {
+		PumpTrainerApplication.get(this).resetSoundPool();
+		isSoundLoaded = false;
+	}
+	
 	@Override
 	public void onPause() {
 		super.onPause();
-		mSoundPool.release();
-		isSoundLoaded = false;
+		pauseSound();
 		isResuming = true;
+	}
+
+	@Override
+	public void dialogDismissed() {
+		pauseCountDown();
 	}
 	
 }

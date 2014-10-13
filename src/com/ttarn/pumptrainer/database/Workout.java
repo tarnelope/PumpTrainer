@@ -1,15 +1,14 @@
 package com.ttarn.pumptrainer.database;
 
-import java.sql.Date;
 
 public class Workout {
 	
 	private long mId;
 	private String mDate;
-	private static int mHangTime;
-	private static int mRestTime;
-	private static int mRepNum;
-	private static int mRecoveryTime;
+	private int mHangTime;
+	private int mRestTime;
+	private int mRepNum;
+	private int mRecoveryTime;
 	private int mSetsCompleted;
 	private String mNotes;
 

@@ -3,6 +3,7 @@ package com.ttarn.pumptrainer;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -30,6 +31,8 @@ public class LogDialogFragment extends DialogFragment {
 	
 	private EditText mNotesText;
 	
+	private LogDialogListener mListener;
+	
 	static LogDialogFragment newInstance(int hang, int rest, int rep, int recovery, int setsCompleted) {
 		mHangTime = String.valueOf(hang);
 		mRestTime = String.valueOf(rest);
@@ -38,6 +41,10 @@ public class LogDialogFragment extends DialogFragment {
 		mSetsCompleted = String.valueOf(setsCompleted);
 		
 		return new LogDialogFragment();
+	}
+	
+	public interface LogDialogListener {
+		public void dialogDismissed();
 	}
 	
 	@Override
@@ -81,6 +88,7 @@ public class LogDialogFragment extends DialogFragment {
 			
 			@Override
 			public void onClick(View v) {
+				mListener.dialogDismissed();
 				dismiss();
 			}
 		});
@@ -110,5 +118,11 @@ public class LogDialogFragment extends DialogFragment {
 		getDialog().setTitle("Log Workout");
 		
 		return v;
+	}
+	
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		mListener = (LogDialogListener) activity;
 	}
 }

@@ -130,21 +130,21 @@
         android:padding="@dimen/action_text_padding"
         android:weightSum="1.0" >
 
-        <Button 
+        <Button
             android:id="@+id/dismiss_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dismiss"
             android:layout_weight=".5"
-            />
+            android:text="@string/dismiss"
+            android:textSize="@dimen/home_font_size" />
+
         <Button
             android:id="@+id/save_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dialog_font_size"
             android:layout_weight=".5"
             android:text="@string/save"
-            />
+            android:textSize="@dimen/home_font_size" />
         
      </LinearLayout>
 

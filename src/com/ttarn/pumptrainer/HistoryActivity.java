@@ -2,8 +2,10 @@ package com.ttarn.pumptrainer;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -140,8 +142,47 @@ public class HistoryActivity extends ListActivity {
 				}
 			});
 			
+			v.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					int[] timeArray = {wo.getHang(), wo.getRest(), wo.getRep(), wo.getRecovery()};
+					showSetWorkoutAlert(timeArray);
+				}
+			});
+			
 			return v;
 		}
+		
+	}
+	
+	private void showSetWorkoutAlert(final int[] timeArray) {
+		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+		
+		alertBuilder.setTitle("So you want another burn?");
+		alertBuilder.setMessage("Alright then. You reaady?");
+		
+		alertBuilder.setPositiveButton("Let's go!", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent newWo = new Intent(getBaseContext(), ExerciseActivity.class);
+				newWo.putExtra("timeArray", timeArray);
+				newWo.putExtra("new", true);
+				startActivity(newWo);
+			}
+		});
+		
+		alertBuilder.setNegativeButton("Gimme a sec", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		});
+		
+		AlertDialog alertDialog = alertBuilder.create();
+		alertDialog.show();
 		
 	}
 	

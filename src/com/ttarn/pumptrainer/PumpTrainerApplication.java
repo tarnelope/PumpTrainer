@@ -3,6 +3,8 @@ package com.ttarn.pumptrainer;
 import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.AudioManager;
+import android.media.SoundPool;
 
 import com.ttarn.pumptrainer.database.WorkoutDbHelper;
 
@@ -10,6 +12,7 @@ public class PumpTrainerApplication extends Application {
 	
 	private WorkoutDbHelper mHelper;
 	private boolean isFirstTime;
+	private SoundPool mSoundPool;
 	
 	public PumpTrainerApplication() {
 		
@@ -23,6 +26,7 @@ public class PumpTrainerApplication extends Application {
 	public void onCreate() {
 		mHelper = new WorkoutDbHelper(getApplicationContext());
 		isFirstTime = true;
+		mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
 	}
 	
 	public SQLiteDatabase getReadableDb() {
@@ -43,5 +47,14 @@ public class PumpTrainerApplication extends Application {
 	
 	public boolean isFirstTime() {
 		return isFirstTime;
+	}
+	
+	public SoundPool getSoundPool() {
+		return mSoundPool;
+	}
+	
+	public void resetSoundPool() {
+		mSoundPool.release();
+		mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
 	}
 }

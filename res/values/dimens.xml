@@ -14,7 +14,7 @@
     <dimen name="home_font_size">20sp</dimen>
     <dimen name="countdown_font_size">35sp</dimen>
     <dimen name="action_font_size">55sp</dimen>
-    <dimen name="exercise_time_font_size">70sp</dimen>
+    <dimen name="exercise_time_font_size">80sp</dimen>
     <dimen name="rep_font_size">25sp</dimen>
     <dimen name="action_text_height">110sp</dimen>
     <dimen name="action_text_padding">15sp</dimen>

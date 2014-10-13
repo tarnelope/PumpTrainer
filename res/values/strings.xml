@@ -16,10 +16,12 @@
 
     <string name="time_colon"> : </string>
     <string name="dismiss">Cancel</string>
-    <string name="save">Save</string>
+    <string name="save">Log</string>
     
     <string name="no_workouts">No Workouts Logged. \n What are you waiting for?!</string>
 	
     <string name="new_wo">New</string>
     <string name="see_log">Log</string>
+    
+    <string name="welcome">Thanks for choosing PumpTrainer to get your pump on. \n </string>
 </resources>

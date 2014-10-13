@@ -96,13 +96,14 @@ containing a value of this type.
         public static final int logo2=0x7f020005;
         public static final int pause=0x7f020006;
         public static final int pause_off=0x7f020007;
-        public static final int rest_wheel=0x7f020008;
-        public static final int set_time_row_bg=0x7f020009;
-        public static final int sound_off=0x7f02000a;
-        public static final int sound_on=0x7f02000b;
-        public static final int start_button_default=0x7f02000c;
-        public static final int time_wheel=0x7f02000d;
-        public static final int workout_value_style=0x7f02000e;
+        public static final int pump_trainer=0x7f020008;
+        public static final int rest_wheel=0x7f020009;
+        public static final int set_time_row_bg=0x7f02000a;
+        public static final int sound_off=0x7f02000b;
+        public static final int sound_on=0x7f02000c;
+        public static final int start_button_default=0x7f02000d;
+        public static final int time_wheel=0x7f02000e;
+        public static final int workout_value_style=0x7f02000f;
     }
     public static final class id {
         public static final int action_text=0x7f0b0000;
@@ -119,7 +120,7 @@ containing a value of this type.
         public static final int hang_time_row=0x7f0b0012;
         public static final int imageView1=0x7f0b0011;
         public static final int minute_text=0x7f0b0022;
-        public static final int new_wo=0x7f0b0025;
+        public static final int new_wo=0x7f0b0026;
         public static final int pause_btn=0x7f0b0006;
         public static final int recovery_time_row=0x7f0b0015;
         public static final int rep_text=0x7f0b0004;
@@ -128,13 +129,14 @@ containing a value of this type.
         public static final int rest_wheel=0x7f0b0002;
         public static final int save_btn=0x7f0b0007;
         public static final int second_text=0x7f0b0024;
-        public static final int see_log=0x7f0b0026;
+        public static final int see_log=0x7f0b0027;
         public static final int set_time_row_label=0x7f0b0021;
         public static final int sound_btn=0x7f0b0005;
         public static final int start_btn=0x7f0b0016;
         public static final int time_colon=0x7f0b0023;
         public static final int time_text=0x7f0b0003;
         public static final int time_wheel=0x7f0b0001;
+        public static final int welcome_logo=0x7f0b0025;
         public static final int wo_all_values=0x7f0b0019;
         public static final int wo_date=0x7f0b0017;
         public static final int wo_hang_val=0x7f0b001a;
@@ -154,6 +156,7 @@ containing a value of this type.
         public static final int fragment_home=0x7f030005;
         public static final int item_workout=0x7f030006;
         public static final int set_time_row_view=0x7f030007;
+        public static final int welcome_frag=0x7f030008;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;
@@ -180,6 +183,7 @@ containing a value of this type.
         public static final int sets=0x7f080006;
         public static final int start=0x7f080008;
         public static final int time_colon=0x7f08000a;
+        public static final int welcome=0x7f080010;
     }
     public static final class style {
         /** 
