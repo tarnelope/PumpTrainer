@@ -160,7 +160,7 @@ public class HistoryActivity extends ListActivity {
 		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 		
 		alertBuilder.setTitle("So you want another burn?");
-		alertBuilder.setMessage("Alright then. You reaady?");
+		alertBuilder.setMessage("Alright then. You ready?");
 		
 		alertBuilder.setPositiveButton("Let's go!", new DialogInterface.OnClickListener() {
 			
@@ -173,7 +173,7 @@ public class HistoryActivity extends ListActivity {
 			}
 		});
 		
-		alertBuilder.setNegativeButton("Gimme a sec", new DialogInterface.OnClickListener() {
+		alertBuilder.setNegativeButton("Not yet", new DialogInterface.OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {

@@ -2,11 +2,12 @@ package com.ttarn.pumptrainer;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -22,8 +23,8 @@ import com.ttarn.pumptrainer.customviews.CircleProgressView;
 public class ExerciseActivity extends Activity implements LogDialogListener {
 	
 	private SoundPool mSoundPool;
-	private int mHighBeepId;
 	private int mLowBeepId;
+	private int mHighBeepId;
 	private int mPolishBeepId;
 	private int mCurrentBeepId;
 	private boolean isSoundLoaded;
@@ -122,13 +123,11 @@ public class ExerciseActivity extends Activity implements LogDialogListener {
 			public void onClick(View v) {
 				if (isSoundLoaded) { //Pausing it
 					soundBtn.setImageResource(R.drawable.sound_off);
-					//mSoundPool.release();
 					PumpTrainerApplication.get(getBaseContext()).resetSoundPool();
 					isSoundLoaded = false;
 				} else { //Unpausing it
 					soundBtn.setImageResource(R.drawable.sound_on);
 					enableSound();
-					isSoundLoaded = true;
 				}
 				
 			}
@@ -149,7 +148,7 @@ public class ExerciseActivity extends Activity implements LogDialogListener {
 			@Override
 			public void onClick(View v) {
 				DialogFragment log = LogDialogFragment.newInstance(mHangTime, mRestTime, mRepNum, mRecoveryTime, mSetsCompleted);
-				pauseCountDown();
+				if (!isPaused) pauseCountDown();
 				log.show(getFragmentManager().beginTransaction(), "Save Pump");
 			}
 		});
@@ -165,9 +164,8 @@ public class ExerciseActivity extends Activity implements LogDialogListener {
 			mSetsCompleted = 0;
 			Thread.currentThread().interrupt();
 			countdown(START_COUNTDOWN_TIME, START_INDEX);
-			if (isSoundLoaded) {
-				mSoundPool.play(mPolishBeepId, mVolume, mVolume, 1, 0, 1f);
-	    	}
+			mCurrentBeepId = mPolishBeepId;
+			playBeep();
 		}
 	}
 	
@@ -186,12 +184,12 @@ public class ExerciseActivity extends Activity implements LogDialogListener {
 		int id = item.getItemId();
 		switch (id) {
 			case R.id.see_log:
-				Intent i = new Intent(this, HistoryActivity.class);
-				startActivity(i);
+				Intent startHistoryAct = new Intent(this, HistoryActivity.class);
+				startActivity(startHistoryAct);
 				break;
 			case R.id.new_wo:
-				Intent mainI = new Intent(this, MainActivity.class);
-				startActivity(mainI);
+				Intent startMainAct = new Intent(this, MainActivity.class);
+				startActivity(startMainAct);
 				break;
 		}
 		return super.onOptionsItemSelected(item);
@@ -221,6 +219,7 @@ public class ExerciseActivity extends Activity implements LogDialogListener {
 			resumeTimer();
 		} else {
 			mPauseBtn.setImageResource(R.drawable.pause_off);
+			mActionText.setTextSize(70);
 			mActionText.setText("PAUSED");
 			mActionText.setBackgroundColor(getResources().getColor(R.color.dark_tomato_97));
 			
@@ -251,14 +250,13 @@ public class ExerciseActivity extends Activity implements LogDialogListener {
 		if (time > 0) {
     		mTimeText.setText("" + ((time) / 1000));
     	} else if (actionIndex == START_INDEX ){
-    		//hangCountDown(mHangTime);
     		countdown(mHangTime, HANG_INDEX);
     	} else if (actionIndex == HANG_INDEX ) {
     		countdown(mRestTime, REST_INDEX);
     	} else if (actionIndex == REST_INDEX && mCurrentRepNum > 1) {
     		mCurrentRepNum--;
     		mRepText.setText(String.valueOf(mCurrentRepNum) + mRepRemaining);
-    		mRestWheel.setVisibility(View.GONE);
+  //  		mRestWheel.setVisibility(View.GONE);
     		countdown(mHangTime, HANG_INDEX);
     	} else if (actionIndex == REST_INDEX && mCurrentRepNum == 1){
     		mSetsCompleted++;
@@ -272,36 +270,37 @@ public class ExerciseActivity extends Activity implements LogDialogListener {
 	
 	private void countdown(final int time, final int index) {
 		
-		PumpTrainerApplication.get(this).setFirstTime(false);
+		
 		
 		mCurrentIndex = index;
 		
 		switch (index) {
 			case 0: //Start
 				
+				PumpTrainerApplication.get(this).setFirstTime(false);
+				isSetFromLog = false;
+				
 				mCurrentBeepId = mPolishBeepId;
 				
 				mActionText.setText("Workout begins in...");
 				mActionText.setTextSize(30);
 				
-				if (isSoundLoaded) {
-					mSoundPool.play(mPolishBeepId, mVolume, mVolume, 1, 0, 1f);
-		    	}
+				playBeep();
+				
 				break;
 			case 1: //Hang
-				mRestWheel.setVisibility(View.GONE);
+			    mRestWheel.setVisibility(View.GONE);
 				mActionText.setText("GET IT!");
 				mActionText.setTextSize(70);
 				mCurrentBeepId = mHighBeepId;
-				if (isSoundLoaded) {
-					mSoundPool.play(mHighBeepId, mVolume, mVolume, 1, 0, 1f);
-				}
+				playBeep();
 				mCurrentActionTime = mHangTime;
 				break;
 			case 2: //Rest
+				mCurrentBeepId = mLowBeepId;
 				mRestWheel.setVisibility(View.VISIBLE);
 				mActionText.setText("REST");
-				mCurrentBeepId = mLowBeepId;
+				mCurrentActionTime = mRestTime;
 				break;
 			case 3: //Recovery
 				mActionText.setText("RECOVER");
@@ -325,7 +324,7 @@ public class ExerciseActivity extends Activity implements LogDialogListener {
 	            				isResuming = false;
 	            			}
 	            			if (timeLeft != 0 && index != RECOVERY_INDEX) {
-	            				mSoundPool.play(mCurrentBeepId, mVolume, mVolume, 1, 0, 1f);
+	            				playBeep();
 	            			}
 	            			if (index == HANG_INDEX || index == RECOVERY_INDEX) {
 		            			mTimeWheel.setmSubCurProgress((float)currentSlice);	
@@ -347,6 +346,12 @@ public class ExerciseActivity extends Activity implements LogDialogListener {
 	    };
 
 	    new Thread(runnable).start();
+	}
+	
+	private void playBeep() {
+		if (isSoundLoaded) {
+			mSoundPool.play(mCurrentBeepId, mVolume, mVolume, 1, 0, 1f);
+		}
 	}
 	
 	private void pauseSound() {

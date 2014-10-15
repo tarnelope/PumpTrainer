@@ -89,14 +89,14 @@ containing a value of this type.
     }
     public static final class drawable {
         public static final int background_img=0x7f020000;
-        public static final int delete_btn=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int log=0x7f020003;
-        public static final int logo=0x7f020004;
-        public static final int logo2=0x7f020005;
-        public static final int pause=0x7f020006;
-        public static final int pause_off=0x7f020007;
-        public static final int pump_trainer=0x7f020008;
+        public static final int background_img_bw=0x7f020001;
+        public static final int delete_btn=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int log=0x7f020004;
+        public static final int logo=0x7f020005;
+        public static final int logo2=0x7f020006;
+        public static final int pause=0x7f020007;
+        public static final int pause_off=0x7f020008;
         public static final int rest_wheel=0x7f020009;
         public static final int set_time_row_bg=0x7f02000a;
         public static final int sound_off=0x7f02000b;
